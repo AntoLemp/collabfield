@@ -4,3 +4,4 @@ import "controllers"
 //= require jquery
 //= require bootstrap-sprockets
 
+import * as bootstrap from "bootstrap"
