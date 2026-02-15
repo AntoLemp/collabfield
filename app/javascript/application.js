@@ -1,7 +1,10 @@
-// Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
 import "@hotwired/turbo-rails"
-import "controllers"
-//= require jquery
-//= require bootstrap-sprockets
+import $ from "jquery"
+import initPostStyling from "./posts/style" // Import the function
 
-import * as bootstrap from "bootstrap"
+// Globalize jQuery
+window.jQuery = $
+window.$ = $
+
+// Execute the function
+initPostStyling();
