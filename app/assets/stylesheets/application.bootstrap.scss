@@ -10,8 +10,10 @@
 @import "base/default";
 
 // Partials - main css files
-@import "partials/*";
-@import "partials/layout/*";
+@import "partials/home_page";
+@import "partials/signup";
+@import "partials/posts";
+@import "partials/layout/navigation";
 
 // Media queries for a responsive design
 @import "responsive/desktop";
