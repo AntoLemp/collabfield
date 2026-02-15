@@ -21,7 +21,8 @@
 // Partials - main css files
 @import "partials/home_page";
 @import "partials/signup";
-@import "partials/posts";
+@import "partials/posts/home_page";
+@import "partials/posts/modal";
 @import "partials/layout/navigation";
 
 
