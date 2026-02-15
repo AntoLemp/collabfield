@@ -1,16 +1,13 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-default navbar-fixed-top">
   <div class="container">
-    <div class="d-flex justify-content-between w-100 w-lg-auto">
-      <%= link_to 'collabfield', root_path, class: 'navbar-brand' %>
-      <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-    </div>
+    <div class="row w-100">
 
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="navbar-nav me-auto">
-      </ul>
+      <div class="col-sm-7">
+        <%= render 'layouts/navigation/header' %>
+      </div>
 
-      <ul class="navbar-nav ms-auto">
-      </ul>
+      <div class="col-sm-5 d-flex justify-content-end">
+        <%= render 'layouts/navigation/collapsible_elements' %>
+      </div>
+
     </div></div></nav>

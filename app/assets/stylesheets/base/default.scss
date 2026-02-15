@@ -5,9 +5,9 @@
 html {
   font-size: 62.5%;
 }
-
+$backgroundColor: #f0f0f0;
 body {
-  background: #f0f0f0;
+  background: $backgroundColor;
   font-size: 14px;
   font-size: 1.4rem;
 }

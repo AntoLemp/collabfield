@@ -1,7 +1,7 @@
 
-@import "bootstrap";
-@import 'bootstrap/scss/bootstrap';
-@import 'bootstrap-icons/font/bootstrap-icons';
+//@import "bootstrap";
+//@import 'bootstrap/scss/bootstrap';
+//@import 'bootstrap-icons/font/bootstrap-icons';
 
 // Variables
 @import "base/variables";
@@ -12,3 +12,8 @@
 // Partials - main css files
 @import "partials/*";
 @import "partials/layout/*";
+
+// Media queries for a responsive design
+@import "responsive/desktop";
+@import "responsive/mobile";
+
