@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 text-center">
+      <h1><%= page_title %></h1>
+    </div>
+
+    <div class="col-sm-12">
+      <div class="col-sm-8 col-sm-offset-2">
+        <%= render create_new_post_partial_path, branch: branch %>
+      </div>
+    </div>
+
+    <%= render 'posts/branch/categories' %>
+
+    <div class="col-sm-12">
+      <div class="row" id="feed">
+        <%= render @posts %>
+      </div>
+      <%= render no_posts_partial_path(@posts) %>
+
+      <div class="col-sm-12 text-center">
+        <%= render @posts %>
+      </div>
+    </div>
+  </div>
+</div>

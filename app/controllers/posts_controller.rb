@@ -24,7 +24,7 @@ class PostsController < ApplicationController
 
   def posts_for_branch(branch)
     @categories = Category.where(branch: branch)
-    @posts = get_posts.paginate(page: params[:page])
+    @posts = Post.by_branch(branch)
   end
 
   def get_posts
