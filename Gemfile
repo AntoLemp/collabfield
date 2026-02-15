@@ -45,6 +45,8 @@ gem "dotenv-rails", groups: [:development, :test]
 # gem "bootstrap-sass", "~> 3.3.6"
 # gem "sass-rails", ">= 3.2"
 # gem "jquery-rails"
+gem "bootstrap", "~> 5.3"
+gem "bootstrap-icons-helper"
 gem "cssbundling-rails"
 gem 'devise'
 gem 'bootstrap_form'

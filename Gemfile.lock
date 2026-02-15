@@ -85,6 +85,13 @@ GEM
     bindex (0.8.1)
     bootsnap (1.23.0)
       msgpack (~> 1.2)
+    bootstrap (5.3.8)
+      popper_js (>= 2.11.8, < 3)
+    bootstrap-icons (1.0.15)
+      nokogiri (~> 1)
+    bootstrap-icons-helper (2.0.3)
+      bootstrap-icons (~> 1)
+      rails (>= 7.1)
     bootstrap_form (5.6.0)
       actionpack (>= 7.2)
       activemodel (>= 7.2)
@@ -212,6 +219,7 @@ GEM
       racc
     pg (1.6.3-x64-mingw-ucrt)
     pg (1.6.3-x86_64-linux)
+    popper_js (2.11.8)
     pp (0.6.3)
       prettyprint
     prettyprint (0.2.0)
@@ -384,6 +392,8 @@ PLATFORMS
 
 DEPENDENCIES
   bootsnap
+  bootstrap (~> 5.3)
+  bootstrap-icons-helper
   bootstrap_form
   brakeman
   bundler-audit
