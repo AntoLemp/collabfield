@@ -41,6 +41,10 @@ RSpec.configure do |config|
     DatabaseCleaner.start
   end
 
+  config.before(:each, type: :feature) do
+    Capybara.current_session.driver.browser.manage.window.resize_to(1280, 1024)
+  end
+
   config.after(:each) do
     DatabaseCleaner.clean
   end
