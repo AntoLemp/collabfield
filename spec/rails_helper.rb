@@ -17,12 +17,10 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
   config.filter_rails_from_backtrace!
 
-  # --- ALL CONFIG LINES MUST BE INSIDE THIS BLOCK ---
   config.include Devise::Test::IntegrationHelpers, type: :feature
   config.include FactoryBot::Syntax::Methods
 
-  # Since we removed Poltergeist, use the modern Selenium driver
-  Capybara.javascript_driver = :selenium_chrome_headless
+  Capybara.javascript_driver = :selenium_chrome
   Capybara.server = :puma, { Silent: true }
 
   config.before(:suite) do
@@ -48,5 +46,4 @@ RSpec.configure do |config|
   config.after(:each) do
     DatabaseCleaner.clean
   end
-  # --- END OF BLOCK ---
 end
