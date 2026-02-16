@@ -10,6 +10,12 @@
       </div>
     </div>
 
+    <div class="row">
+      <%= render  'posts/branch/search_form',
+                  branch: branch,
+                  search_placeholder: search_placeholder %>
+    </div><!-- row -->
+
     <%= render 'posts/branch/categories' %>
 
     <div class="col-sm-12">
