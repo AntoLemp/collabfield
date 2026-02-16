@@ -5,9 +5,12 @@
   </div>
   <!-- messages -->
   <ul>
-    <% if @messages.present? %>
-      <% @messages.each_with_index do |message, index| %>
-        <% previous_message = index > 0 ? @messages[index - 1] : nil %>
+    <%# Use 'messages' local variable if it exists, otherwise fall back to '@messages' or conversation.messages as a last resort %>
+    <% chat_messages = local_assigns[:messages] || @messages || conversation.messages.order(created_at: :desc).limit(10) %>
+
+    <% if chat_messages.present? %>
+      <% chat_messages.each_with_index do |message, index| %>
+        <% previous_message = index > 0 ? chat_messages[index - 1] : nil %>
         <%= render partial: 'private/messages/message',
                    locals: { message: message,
                              previous_message: previous_message,

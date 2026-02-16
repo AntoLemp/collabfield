@@ -1,4 +1,4 @@
-class Private::MessagesController < ActionController::Base
+class Private::MessagesController < ApplicationController
   include Messages
 
   def index

@@ -1,40 +1,63 @@
-import consumer from "channels/consumer"
+// app/javascript/channels/private/conversation_channel.js
+import consumer from "../consumer"
+// Define helper functions outside so they are only initialized once
+const findConv = (conversation_id, type) => {
+  // 1. Check if we are on a dedicated messenger page
+  var messenger_conversation = $('body .conversation');
+  if (messenger_conversation.length > 0) {
+    return messenger_conversation;
+  }
 
-consumer.subscriptions.create("Private::ConversationChannel", {
+  // 2. Otherwise, find the chat window popup by its ID
+  // Make sure your HTML uses: data-pconversation-id="57"
+  return $('body').find("[data-" + type + "conversation-id='" + conversation_id + "']");
+};
+
+const isConvRendered = (conversation_id, type) => {
+  if ($('body .conversation').length) return true;
+  return $('body').find("[data-" + type + "conversation-id='" + conversation_id + "']").is(':visible');
+};
+
+const areMessagesVisible = (conversation) => {
+  if ($('body .conversation').length) return true;
+  return conversation.find('.panel-body').is(':visible');
+};
+
+window.private_conversation = consumer.subscriptions.create("Private::ConversationChannel", {
   connected() {
-    // console.log('Connected to private conversation channel');
+    console.log('Connected to private conversation channel');
   },
 
-  disconnected() {},
-
   received(data) {
-    // 1. Find the conversation window in the DOM
-    var conversation = $('body').find("[data-pconversation-id='" + data['conversation_id'] + "']");
+    // Move menu link to top
+    var $menuLink = $('#conversations-menu ul').find('#menu-pc' + data['conversation_id']);
+    if ($menuLink.length) $menuLink.prependTo('#conversations-menu ul');
 
-    // 2. Decide if we are the sender or receiver
+    var conversation = findConv(data['conversation_id'], 'p');
+    var conversation_rendered = isConvRendered(data['conversation_id'], 'p');
+
     if (data['recipient'] === true) {
-      // If we are the receiver, mark as unseen or highlight styling
-      var $menuLink = $('#menu-pc' + data['conversation_id']);
-      if ($menuLink.length) {
-        $menuLink.addClass('unseen-conv');
+      $('#menu-pc' + data['conversation_id']).addClass('unseen-conv');
+      if (typeof calculateUnseenConversations === 'function') {
+        calculateUnseenConversations();
       }
-      // Append the message
-      conversation.find('.messages-list ul').append(data['message']);
-    } else {
-      // If we are the sender, just append the message
-      conversation.find('.messages-list ul').append(data['message']);
     }
 
-    // 3. Auto-scroll to the bottom
-    if (conversation.length) {
-      var messages_list = conversation.find('.messages-list');
-      messages_list.scrollTop(messages_list[0].scrollHeight);
+    // Append message if the window is open (for both sender and recipient)
+    if (conversation_rendered && conversation.length) {
+      var $list = conversation.find('.messages-list');
+      var $ul = $list.find('ul');
+
+      $ul.append(data['message']);
+
+      // Smooth scroll to bottom after appending
+      $list.stop().animate({ scrollTop: $list[0].scrollHeight }, 200);
     }
   },
 
   send_message: function(data) {
-    return this.perform('send_message', {
-      message: data
-    });
+    return this.perform('send_message', { message: data });
   }
 });
+
+export default window.private_conversation;

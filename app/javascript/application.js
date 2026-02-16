@@ -1,20 +1,31 @@
-import "@hotwired/turbo-rails"
 import $ from "jquery"
-import initPostStyling from "./posts/style"
-import { initPostModal } from "./posts/modal"
-import { initInfiniteScroll} from "./posts/infinite_scroll";
-import Rails from "@rails/ujs"
-Rails.start()
-//= require toggle_window
-//= require conversations
-//= require message_scroll
 
-// Globalize jQuery
+// 1. Globalize jQuery IMMEDIATELY
 window.jQuery = $
 window.$ = $
 
-// Execute the function
+import "@hotwired/turbo-rails"
+import Rails from "@rails/ujs"
+// 2. Start Rails UJS
+if (!window._rails_loaded) {
+    Rails.start()
+}
+
+// 3. Import Styles and Modals
+import initPostStyling from "./posts/style"
+import { initPostModal } from "./posts/modal"
+import { initInfiniteScroll } from "./posts/infinite_scroll"
+
+// 4. Import your logic files (Converted from //= require)
+// Ensure these files exist in app/javascript/ folder
+import "./private/toggle_window"
+import "./private/conversations"
+import "./private/message_scroll"
+
+// 5. Import Channels (This will trigger channels/index.js)
+import "./channels"
+
+// 6. Execute functions
 initPostStyling();
 initPostModal();
 initInfiniteScroll();
-import "channels"

@@ -1,41 +1,29 @@
 class Private::MessageBroadcastJob < ApplicationJob
   queue_as :default
 
-  def perform(message, previous_message)
-    sender = message.user
-    recipient = message.conversation.opposed_user(sender)
+  def perform(message)
+    prev_msg = message.conversation.messages.where("created_at < ?", message.created_at).last
+    recipient_id = message.conversation.opposed_user(message.user).id
 
-    broadcast_to_sender(sender, recipient, message, previous_message)
-    broadcast_to_recipient(sender, recipient, message, previous_message)
-  end
-
-  private
-
-  def broadcast_to_sender(sender, recipient, message, previous_message)
-    ActionCable.server.broadcast(
-      "private_conversations_#{sender.id}",
-      message: render_message(message, previous_message, sender),
-      conversation_id: message.conversation_id,
-      recipient_info: recipient
-    )
-  end
-
-  def broadcast_to_recipient(sender, recipient, message, previous_message)
-    ActionCable.server.broadcast(
-      "private_conversations_#{recipient.id}",
-      recipient: true,
-      sender_info: sender,
-      message: render_message(message, previous_message, recipient),
-      conversation_id: message.conversation_id
-    )
-  end
-
-  def render_message(message, previous_message, user)
-    ApplicationController.render(
+    rendered_message = ApplicationController.render(
       partial: 'private/messages/message',
-      locals: { message: message,
-                previous_message: previous_message,
-                user: user }
+      locals: {
+        message: message,
+        previous_message: prev_msg,
+        user: message.user
+      }
     )
+
+
+    [message.user_id, recipient_id].each do |id|
+      ActionCable.server.broadcast(
+        "private_conversations_#{id}",
+        {
+          message: rendered_message,
+          conversation_id: message.conversation_id,
+          recipient: (id == recipient_id)
+        }
+      )
+    end
   end
 end

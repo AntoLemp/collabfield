@@ -1,3 +1,4 @@
+import $ from "jquery"
 $(document).on('turbo:load', function() {
 
     // when conversation heading is clicked, toggle conversation

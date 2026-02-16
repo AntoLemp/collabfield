@@ -1,3 +1,4 @@
+import $ from "jquery"
 $(document).on('turbolinks:load ajax:complete', function() {
     var iScrollPos = 0;
     var isLoading = false;
@@ -6,7 +7,7 @@ $(document).on('turbolinks:load ajax:complete', function() {
     $(document).ajaxComplete(function() {
         isLoading = false;
         // hide loading icon
-        if (currentLoadingIcon !== undefined) {
+        if (currentLoadingIcon !== undefined && currentLoadingIcon.length) {
             currentLoadingIcon.hide();
         }
     });
@@ -18,14 +19,16 @@ $(document).on('turbolinks:load ajax:complete', function() {
             //Scrolling Down
         } else {
             //Scrolling Up
-            if (iCurScrollPos < 300 && isLoading == false && $('.load-more-messages', this).length) {
+            if (iCurScrollPos < 300 && !isLoading && $('.load-more-messages', this).length) {
                 // trigger link, which loads 10 more messages
                 $('.load-more-messages', this)[0].click();
                 isLoading = true;
 
                 // select conversation window's loading icon and show it
                 currentLoadingIcon = $('.loading-more-messages', this);
-                currentLoadingIcon.show();
+                if (currentLoadingIcon.length) {
+                    currentLoadingIcon.show();
+                }
             }
         }
         iScrollPos = iCurScrollPos;

@@ -1,5 +1,7 @@
 <% @recipient = private_conv_recipient(conversation) %>
 <% @is_messenger = false %>
+<div class="conversation-window" data-pconversation-id="<%= conversation.id %>">
+</div>
 <li class="conversation-window"
     id="pc<%= conversation.id %>"
     data-pconversation-user-name="<%= @recipient.name %>"

@@ -7,3 +7,5 @@ $('#<%= @id_type %><%= @conversation.id %> .messages-list ul')
     .prepend('<%= j render partial: "private/messages/message", collection: @messages, as: :message, locals: { user: @user } %>');
 // after new messages are appended, leave a gap at the top of the scrollbar
 $('#<%= @id_type %><%= @conversation.id %> .messages-list').scrollTop(400);
+// ensure the loading icon is hidden now that messages have been rendered
+$('#<%= @id_type %><%= @conversation.id %> .loading-more-messages').hide();
