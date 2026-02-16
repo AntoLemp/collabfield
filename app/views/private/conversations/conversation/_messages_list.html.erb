@@ -5,5 +5,14 @@
   </div>
   <!-- messages -->
   <ul>
+    <% if @messages.present? %>
+      <% @messages.each_with_index do |message, index| %>
+        <% previous_message = index > 0 ? @messages[index - 1] : nil %>
+        <%= render partial: 'private/messages/message',
+                   locals: { message: message,
+                             previous_message: previous_message,
+                             user: current_user } %>
+      <% end %>
+    <% end %>
   </ul>
 </div>

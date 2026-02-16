@@ -1,28 +1,27 @@
-var conversation = $('body').find("[data-pconversation-id='" +
-    "<%= @conversation.id %>" +
-    "']");
-var chat_windows_count = $('.conversation-window').length + 1;
+// 1. Correct the selector to find the conversation if it already exists
+var conversation = $('body').find("[data-pconversation-id='" + "<%= @conversation.id %>" + "']");
 
 if (conversation.length !== 1) {
-    $('body').append("<%= j(render 'private/conversations/conversation',\
-                                  conversation: @conversation,\
-                                  user: current_user) %>");
-    conversation = $('body').find("[pdata-conversation-id='" +
-        "<%= @conversation.id %>" +
-        "']");
+    // 2. Append the new window
+    $('body').append("<%= j(render 'private/conversations/conversation', conversation: @conversation, user: current_user) %>");
+
+    // 3. FIX: You had 'pdata-conversation-id' (typo). Changed back to 'data-pconversation-id'
+    conversation = $('body').find("[data-pconversation-id='" + "<%= @conversation.id %>" + "']");
 }
 
-// Toggle conversation window after its creation
-$('.conversation-window:nth-of-type(' + chat_windows_count + ')\
-   .conversation-heading').click();
-// mark as seen by clicking it
-setTimeout(function(){
-    $('.conversation-window:nth-of-type(' + chat_windows_count + ')').click();
-}, 1000);
-// focus textarea
-$('.conversation-window:nth-of-type(' + chat_windows_count + ')\
-   form\
-   textarea').focus();
+// 4. Calculate count based on current windows
+var chat_windows_count = $('.conversation-window').length;
 
-// repositions all conversation windows
+// 5. Toggle the window to expand it (this triggers the toggle callback we set up earlier)
+conversation.find('.conversation-heading').click();
+
+// 6. INJECT MESSAGES: This is the part that removes the spinner
+// We use the 'conversation' variable we just defined to find the list
+conversation.find('.loading-more-messages').hide();
+conversation.find('.messages-list ul').html("<%= j(render partial: 'private/messages/message', collection: @messages, as: :message, locals: { user: @user, previous_message: nil }) %>");
+
+// 7. Focus the textarea for immediate typing
+conversation.find('form textarea').focus();
+
+// 8. Reposition windows
 positionChatWindows();

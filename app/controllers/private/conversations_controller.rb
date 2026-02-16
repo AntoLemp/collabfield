@@ -1,48 +1,27 @@
 class Private::ConversationsController < ApplicationController
   def create
     recipient_id = Post.find(params[:post_id]).user_id
-    @conversation = Private::Conversation.new(
-      sender_id: current_user.id,
-      recipient_id: recipient_id
-    )
 
-    if @conversation.save
-      add_to_conversations unless already_added?# Saves the ID to your session
+    @conversation = Private::Conversation.between_users(current_user.id, recipient_id).first_or_create do |c|
+      c.sender_id = current_user.id
+      c.recipient_id = recipient_id
+    end
 
+    if params[:message_body].present?
       Private::Message.create(
         user_id: current_user.id,
         conversation_id: @conversation.id,
         body: params[:message_body]
       )
+    end
 
-      respond_to do |format|
-        format.turbo_stream do
-          # If you haven't created create.turbo_stream.erb yet, fall back to rendering
-          # the same JS partial as plain HTML isn't ideal; better to add a turbo_stream view.
-          render partial: "private/conversations/open", formats: [:js]
-        end
+    add_to_conversations unless already_added?
 
-        format.js do
-          # Renders app/views/private/conversations/_open.js.erb
-          render partial: "private/conversations/open"
-        end
+    @messages = @conversation.messages.order(created_at: :desc).limit(10)
+    @user = current_user
 
-        format.html do
-          # Non-JS fallback: send the user back to where they came from.
-          redirect_back fallback_location: root_path, notice: "Conversation opened."
-        end
-
-        format.any { head :not_acceptable }
-      end
-    else
-      respond_to do |format|
-        format.turbo_stream { head :unprocessable_entity }
-        format.js { render js: "alert('Error creating conversation');" }
-        format.html do
-          redirect_back fallback_location: root_path, alert: "Error creating conversation."
-        end
-        format.any { head :not_acceptable }
-      end
+    respond_to do |format|
+      format.js { render partial: "private/conversations/open" }
     end
   end
 
