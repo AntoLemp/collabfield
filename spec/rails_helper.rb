@@ -40,7 +40,9 @@ RSpec.configure do |config|
   end
 
   config.before(:each, type: :feature) do
-    Capybara.current_session.driver.browser.manage.window.resize_to(1280, 1024)
+    if Capybara.current_session.driver.browser.respond_to?(:manage)
+      Capybara.current_session.driver.browser.manage.window.resize_to(1280, 1024)
+    end
   end
 
   config.after(:each) do
