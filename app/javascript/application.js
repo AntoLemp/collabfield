@@ -17,3 +17,4 @@ window.$ = $
 initPostStyling();
 initPostModal();
 initInfiniteScroll();
+import "channels"

@@ -59,7 +59,7 @@
   resolved "https://registry.npmjs.org/@popperjs/core/-/core-2.11.8.tgz"
   integrity sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==
 
-"@rails/actioncable@>=7.0":
+"@rails/actioncable@^8.1.200", "@rails/actioncable@>=7.0":
   version "8.1.200"
   resolved "https://registry.npmjs.org/@rails/actioncable/-/actioncable-8.1.200.tgz"
   integrity sha512-on0DSb7AFUkq1ocxivDNQhhGW/RQpY91zvRVyyaEWP4gOOZWy33P/UyxjQk74IENWNrTqs8+zOGHwTjiiFruRw==
@@ -155,6 +155,11 @@ caniuse-lite@^1.0.30001759, caniuse-lite@^1.0.30001766:
   version "1.0.30001770"
   resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001770.tgz"
   integrity sha512-x/2CLQ1jHENRbHg5PSId2sXq1CIO1CISvwWAj027ltMVG2UNgW+w9oH2+HzgEIRFembL8bUlXtfbBHR1fCg2xw==
+
+channels@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.npmjs.org/channels/-/channels-0.0.4.tgz"
+  integrity sha512-4zRxUJ/sN+GmA0NeB1wIBA8xzU6C30FsGkSIWob7OLIQVwMKE/ct9n3RLfq8XiLUpafK5gWg7+HuUVzXMXYqVw==
 
 chokidar@^3.3.0, chokidar@^3.5.2:
   version "3.6.0"

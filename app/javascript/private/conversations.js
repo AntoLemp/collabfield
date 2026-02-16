@@ -61,3 +61,67 @@ function hideShowChatWindow() {
             .css('display', 'initial');
     }
 }
+
+import conversationSubscription from "channels/private/conversation_channel"
+
+$(document).on('turbo:load', function() {
+    $(document).off('submit', '.send-private-message').on('submit', '.send-private-message', function(e) {
+        e.preventDefault();
+
+        // Serialize the form data into an object
+        var values = $(this).serializeArray();
+
+        // Call the method on our modern subscription
+        conversationSubscription.send_message(values);
+
+        // Clear the textarea
+        $(this).trigger('reset');
+    });
+});
+
+$(document).on('turbo:load', function() {
+
+    // 1. Initial Scroll: Set scrollbar to bottom to see latest messages
+    // Use a slight timeout to ensure content is fully rendered
+    setTimeout(function() {
+        $('.messages-list').scrollTop(10000);
+    }, 100);
+
+    // 2. "Enter" Key to Send
+    // We use delegation on $(document) so it works for newly opened windows
+    $(document).on('keydown', '.conversation-window, .conversation', function(event) {
+        // 13 is the Enter key
+        if (event.keyCode === 13 && !event.shiftKey) {
+            var $textarea = $(this).find('textarea');
+
+            // If textarea is not just whitespace
+            if ($.trim($textarea.val())) {
+                // Trigger the 'submit' event on the form
+                $(this).find('form').submit();
+
+                // Clear the field and prevent the default newline
+                event.preventDefault();
+                $textarea.val("");
+            }
+        }
+    });
+
+    // Run the unseen counter on page load
+    calculateUnseenConversations();
+});
+
+// 3. Unseen Conversations Counter
+// Define this globally so it can be called from your Action Cable 'received' hook
+window.calculateUnseenConversations = function() {
+    var $menu = $('#conversations-menu');
+    var unseen_conv_length = $menu.find('.unseen-conv').length;
+    var $counter = $('#unseen-conversations');
+
+    if (unseen_conv_length > 0) {
+        $counter.css('visibility', 'visible');
+        $counter.text(unseen_conv_length);
+    } else {
+        $counter.css('visibility', 'hidden');
+        $counter.text('');
+    }
+};
