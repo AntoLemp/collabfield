@@ -15,4 +15,6 @@ class Private::Message < ApplicationRecord
     return nil if previous_message_index.nil? || previous_message_index == 0
     self.conversation.messages[previous_message_index - 1]
   end
+
+
 end
