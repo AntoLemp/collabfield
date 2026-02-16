@@ -5,7 +5,23 @@ class ApplicationController < ActionController::Base
   # Changes to the importmap will invalidate the etag for HTML responses
   stale_when_importmap_changes
 
+  helper_method :private_conversations_windows
   before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :opened_conversations_windows
+  private
+
+  def opened_conversations_windows
+    if user_signed_in?
+      # opened conversations
+      session[:private_conversations] ||= []
+      @private_conversations_windows = Private::Conversation.includes(:recipient, :messages)
+                                                            .find(session[:private_conversations])
+      gon.last_visible_chat_window = @private_conversations_windows.size
+      gon.hidden_chats = 0
+    else
+      @private_conversations_windows = []
+    end
+  end
 
   protected
 
@@ -23,4 +39,5 @@ class ApplicationController < ActionController::Base
   def redirect_if_signed_in
     redirect_to root_path if user_signed_in?
   end
+
 end

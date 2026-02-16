@@ -1,0 +1,8 @@
+$("[data-pconversation-id='<%= @conversation_id %>']")
+    .closest('.conversation-window')
+    .remove();
+
+// This MUST be called to shift the remaining windows to the right
+if (typeof positionChatWindows === 'function') {
+    positionChatWindows();
+}
