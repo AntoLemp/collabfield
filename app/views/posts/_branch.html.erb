@@ -19,7 +19,7 @@
     <%= render 'posts/branch/categories' %>
 
     <div class="col-sm-12">
-      <div class="row" id="feed">
+      <div class="row" id="feed" class="infinite-scroll">
         <%= render @posts %>
       </div>
       <%= render no_posts_partial_path(@posts) %>

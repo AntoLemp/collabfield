@@ -47,4 +47,6 @@ RSpec.describe Post, type: :model do
     expect(Post.search('great').count).to eq 1
     expect(Post.search('great')[0].id).to eq post.id
   end
+
+
 end
