@@ -44,8 +44,7 @@ class Private::ConversationsController < ApplicationController
     @messages = @conversation.messages.order(created_at: :asc).limit(10)
     add_to_conversations unless already_added?
     respond_to do |format|
-      format.js
-      format.html { redirect_back(fallback_location: root_path) }
+      format.js { render partial: 'private/conversations/open' }
     end
   end
 

@@ -24,8 +24,4 @@ conversation.find('.messages-list ul').html("<%= j(render partial: 'private/mess
 conversation.find('form textarea').focus();
 
 // 8. Reposition windows
-if (window.positionChatWindows) {
-    window.positionChatWindows();
-} else {
-    console.error("Positioning function still not loaded into global scope.");
-}
+positionChatWindows();
