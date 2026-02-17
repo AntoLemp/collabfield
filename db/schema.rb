@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_17_115710) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_17_124451) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -27,6 +27,31 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_17_115710) do
     t.bigint "user_id"
     t.index ["contact_id"], name: "index_contacts_on_contact_id"
     t.index ["user_id"], name: "index_contacts_on_user_id"
+  end
+
+  create_table "group_conversations", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "name"
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "group_conversations_users", id: false, force: :cascade do |t|
+    t.integer "conversation_id"
+    t.integer "user_id"
+    t.index ["conversation_id"], name: "index_group_conversations_users_on_conversation_id"
+    t.index ["user_id"], name: "index_group_conversations_users_on_user_id"
+  end
+
+  create_table "group_messages", force: :cascade do |t|
+    t.string "added_new_users"
+    t.string "content"
+    t.bigint "conversation_id"
+    t.datetime "created_at", null: false
+    t.string "seen_by"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.index ["conversation_id"], name: "index_group_messages_on_conversation_id"
+    t.index ["user_id"], name: "index_group_messages_on_user_id"
   end
 
   create_table "posts", force: :cascade do |t|

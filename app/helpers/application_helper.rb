@@ -6,5 +6,6 @@ module ApplicationHelper
   include Shared::MessagesHelper
   include Private::MessagesHelper
   include Shared::ConversationsHelper
+  include ContactsHelper
 end
 
