@@ -60,7 +60,18 @@ window.subToGroupConversationChannel = function(id) {
           MarkGroupConvAsUnseen(data['user_id'], data['conversation_id']);
 
           // append message
-          appendGroupMessage(conversation_rendered, messages_visible, conversation, data['message']);
+          var $message = $(data['message']);
+          var senderId = data['user_id'];
+          var currentUserId = $('body').attr('data-current-user-id'); // Make sure this exists in your layout!
+
+          // If I didn't send this, swap the classes
+          if (senderId != currentUserId) {
+            $message.find('.row').removeClass('same-user-content').addClass('different-user-content');
+            // You might also need to find the specific div that controls the alignment/color
+          }
+
+          // Now append the "corrected" message
+          appendGroupMessage(conversation_rendered, messages_visible, conversation, $message);
 
           if (conversation_rendered) {
             var messages_list = conversation.find('.messages-list');
@@ -140,9 +151,18 @@ function modifyConversationsMenuList(conversation_id) {
   }
 }
 
-function appendGroupMessage(rendered, visible, group_conversation, message) {
+function appendGroupMessage(rendered, visible, group_conversation, message_html) {
   if (rendered) {
-    group_conversation.find('.messages-list ul').append(message);
+    var $message = $(message_html); // Turn the string into a jQuery object
+    var sender_id = $message.find('.row').attr('data-sender-id'); // We'll add this attribute
+    var current_user_id = $('body').attr('data-current-user-id'); // Or use gon.user_id
+
+    // If I am NOT the sender, change the class so it flips to the other side
+    if (sender_id != current_user_id) {
+      $message.find('.row').removeClass('same-user-content').addClass('different-user-content');
+    }
+
+    group_conversation.find('.messages-list ul').append($message);
   }
 }
 

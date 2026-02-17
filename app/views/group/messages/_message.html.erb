@@ -2,8 +2,11 @@
                                                           previous_message),
            locals: { message: message, previous_message: previous_message } %>
 <li class="group-message">
-  <div class="row <%= seen_by_user? %>" data-seen-by="<%= group_message_seen_by(message) %>">
+  <div class="row <%= seen_by_user? %>"
+       data-seen-by="<%= group_message_seen_by(message) %>"
+       data-sender-id="<%= message.user_id %>">
+
     <%= render partial: message_content_partial_path(user, message, previous_message),
-               locals: { user: user, message: message, previous_message: previous_message } %>
+               locals: { user: user, message: message } %>
   </div>
 </li>
