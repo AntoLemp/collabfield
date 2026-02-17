@@ -1,5 +1,7 @@
 <% @recipient = private_conv_recipient(conversation) %>
+<% @contact = get_contact_record(@recipient) %>
 <% @is_messenger = false %>
+
 <div class="conversation-window" data-pconversation-id="<%= conversation.id %>">
 </div>
 <li class="conversation-window"
@@ -12,6 +14,7 @@
 
     <!-- Conversation window's content -->
     <div class="panel-body">
+      <%= render 'private/conversations/conversation/request_status' %>
       <%= render 'private/conversations/conversation/messages_list',
                  conversation: conversation %>
       <%= render 'private/conversations/conversation/new_message_form',
