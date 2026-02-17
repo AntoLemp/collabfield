@@ -12,11 +12,11 @@ class Group::ConversationsController < ApplicationController
   def open
     @conversation = Group::Conversation.find(params[:id])
     add_to_conversations unless already_added?
-
     respond_to do |format|
-      format.js { render 'group/conversations/open' }
+      format.js { render partial: 'group/conversations/open' }
     end
   end
+
 
   private
 
