@@ -57,7 +57,12 @@ window.private_conversation = consumer.subscriptions.create("Private::Conversati
 
   send_message: function(data) {
     return this.perform('send_message', { message: data });
+  },
+
+  set_as_seen: function(conv_id) {
+    return this.perform('set_as_seen', { conv_id: conv_id });
   }
+
 });
 
 export default window.private_conversation;

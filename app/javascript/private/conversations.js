@@ -12,8 +12,7 @@ $(document).on('turbo:load', function() {
     }
 
     window.addEventListener('resize', hideShowChatWindow);
-    positionChatWindows();
-    hideShowChatWindow();
+    window.positionChatWindows();
 
     // --- Message Handling Logic ---
 
@@ -55,7 +54,7 @@ $(document).on('turbo:load', function() {
 
 // --- Keep your existing functions outside the turbo:load block ---
 
-function positionChatWindows() {
+window.positionChatWindows = function() {
     let chat_windows_count = $('.conversation-window').length;
     if (gon.hidden_chats + gon.last_visible_chat_window !== chat_windows_count) {
         if (gon.hidden_chats == 0) {
@@ -69,7 +68,9 @@ function positionChatWindows() {
         $('.conversation-window:nth-of-type(' + chat_window + ')')
             .css('right', '' + right_position + 'px');
     }
+    hideShowChatWindow();
 }
+
 
 function hideShowChatWindow() {
     // 1. Get the window element
@@ -124,4 +125,26 @@ $(document).off('click', '.conversation-heading').on('click', '.conversation-hea
             }
         }
     });
+});
+
+$(document).on('click', '.conversation-window, .private-conversation', function(e) {
+    // if the last message in a conversation is not a user's message and is unseen
+    // mark unseen messages as seen
+    var latest_message = $('.messages-list ul li:last .row div', this);
+    if (latest_message.hasClass('message-received') && latest_message.hasClass('unseen')) {
+        var conv_id = $(this).find('.panel').attr('data-pconversation-id');
+        // if conv_id doesn't exist, it means that conversation is opened in messenger
+        if (conv_id == null) {
+            var conv_id = $(this).find('.messages-list').attr('data-pconversation-id');
+        }
+        // mark conversation as seen in conversations menu list
+        latest_message.removeClass('unseen');
+        $('#menu-pc' + conv_id).removeClass('unseen-conv');
+        calculateUnseenConversations();
+        window.private_conversation.set_as_seen(conv_id);
+    }
+});
+
+$(document).on('turbolinks:load', function() {
+    calculateUnseenConversations();
 });

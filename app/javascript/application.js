@@ -15,7 +15,8 @@ if (!window._rails_loaded) {
 import initPostStyling from "./posts/style"
 import { initPostModal } from "./posts/modal"
 import { initInfiniteScroll } from "./posts/infinite_scroll"
-
+import conversationSubscription from "./channels/private/conversation_channel"
+window.private_conversation = conversationSubscription;
 // 4. Import your logic files (Converted from //= require)
 // Ensure these files exist in app/javascript/ folder
 import "./private/toggle_window"

@@ -6,7 +6,8 @@
     data-type="private">
   <%= link_to recipient.name.truncate(20),
               open_private_conversation_path(id: conversation.id),
-              data: { turbo_method: :post },
+              data: { type: :js},
+              method: :post,
               remote: true,
               class: 'bigger-screen-link' %>
 </li>

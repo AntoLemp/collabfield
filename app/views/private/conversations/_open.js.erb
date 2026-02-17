@@ -3,7 +3,7 @@ var conversation = $('body').find("[data-pconversation-id='" + "<%= @conversatio
 
 if (conversation.length !== 1) {
     // 2. Append the new window
-    $('conversations-list').append("<%= j(render 'private/conversations/conversation', conversation: @conversation, user: current_user) %>");
+    $('#conversations-list').append("<%= j(render 'private/conversations/conversation', conversation: @conversation, user: current_user) %>");
 
     // 3. FIX: You had 'pdata-conversation-id' (typo). Changed back to 'data-pconversation-id'
     conversation = $('body').find("[data-pconversation-id='" + "<%= @conversation.id %>" + "']");
@@ -24,4 +24,8 @@ conversation.find('.messages-list ul').html("<%= j(render partial: 'private/mess
 conversation.find('form textarea').focus();
 
 // 8. Reposition windows
-positionChatWindows();
+if (window.positionChatWindows) {
+    window.positionChatWindows();
+} else {
+    console.error("Positioning function still not loaded into global scope.");
+}
