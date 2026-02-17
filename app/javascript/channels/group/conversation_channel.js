@@ -1,6 +1,6 @@
 import consumer from "channels/consumer"
 
-consumer.subscriptions.create("Group::ConversationChannel", {
+window.group_conversation = consumer.subscriptions.create("Group::ConversationChannel", {
   connected() {
     // Called when the subscription is ready for use on the server
   },
