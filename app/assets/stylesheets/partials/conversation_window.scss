@@ -19,8 +19,7 @@ textarea {
 }
 
 .conversation-window, .new_chat_window {
-  min-width: 400px;
-  max-width: 400px;
+  width: 360px !important;
   position: fixed;
   bottom: 0;
   right: 0;
@@ -30,7 +29,12 @@ textarea {
 .conversation-heading, .conversation-heading-full, .new_chat_window {
   background-color: $navbarColor !important;
   color: white !important;
+  box-sizing: border-box;
+  display: flex;             /* Changed from inline-block */
+  align-items: center;      /* Vertically centers everything */
+  justify-content: space-between;
   height: 40px;
+  width: 100%;
   border: none !important;
   a {
     color: white !important;
@@ -40,7 +44,7 @@ textarea {
 
 .conversation-heading, .conversation-heading-full {
   padding: 0 0 0 15px;
-  width: 360px;
+  width: 360px !important;
   display: inline-block;
   vertical-align: middle;
   line-height: 40px;
@@ -52,7 +56,6 @@ textarea {
   height: 40px;
   width: 40px;
   font-size: 20px;
-  font-size: 2.0rem;
   border: none;
   background-color: $navbarColor;
 }
@@ -246,7 +249,7 @@ textarea {
   top: 40px;
   background-color: white;
   display: none;
-  height: 45px;
+  min-height: 45px;
   width: 100%;
   z-index: 2;
 }

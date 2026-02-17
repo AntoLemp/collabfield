@@ -8,5 +8,6 @@ module ApplicationHelper
   include Shared::ConversationsHelper
   include ContactsHelper
   include Group::ConversationsHelper
+  include Group::MessagesHelper
 end
 

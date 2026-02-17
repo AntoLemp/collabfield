@@ -12,7 +12,10 @@ class OrderConversationsService
     all_conversations = all_private_conversations + all_group_conversations
 
     all_conversations = all_conversations.sort { |a, b|
-      b.messages.last.created_at <=> a.messages.last.created_at
+      b_date = b.messages.last&.created_at || b.created_at
+      a_date = a.messages.last&.created_at || a.created_at
+
+      b_date <=> a_date
     }
   end
 

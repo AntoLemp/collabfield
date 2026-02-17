@@ -2,40 +2,47 @@ import $ from "jquery"
 $(document).on('turbo:load', function() {
 
     // when conversation heading is clicked, toggle conversation
-    $('body').on('click',
-        '.conversation-heading, .conversation-heading-full',
-        function(e) {
+    $(document).off('click', '.conversation-heading')
+        .on('click', '.conversation-heading', function(e) {
+
+            var $header = $(this);
+            var $panel = $header.parent();
+            var $panel_body = $panel.find('.panel-body');
+            var $selectUsersMenu = $header.find('.select-users-to-chat');
+
+            // 1. Handle the '+' button click specifically
+            if ($(e.target).closest('.add-people-to-chat').length > 0) {
+                return
+            }
+
+            // 2. Prevent clicks on the dropdown or 'X' from collapsing the window
+            if ($(e.target).closest('.select-users-to-chat, .close-conversation').length > 0) {
+                return;
+            }
+
             e.preventDefault();
-            var panel = $(this).parent();
-            var panel_body = panel.find('.panel-body');
-            var messages_list = panel.find('.messages-list');
 
-            panel_body.toggle(100, function() {
-                let conversation_heading;
+            // 3. Toggle the panel body (Minimize/Expand)
+            $panel_body.toggle(100, function() {
                 var messages_visible = $('ul', this).has('li').length;
-                // if window is collapsed, hide conversation menu options
-                if ( panel_body.css('display') == 'none' ) {
-                    panel.find('.add-people-to-chat,\
-                .add-user-to-contacts,\
-                .contact-request-sent').hide();
-                    conversation_heading = panel.find('.conversation-heading');
-                    conversation_heading.css('width', '360px');
 
-                } else { // show conversation menu options
-                    conversation_heading = panel.find('.conversation-heading');
-                    conversation_heading.css('width', '320px');
-                    panel.find('.add-people-to-chat,\
-                .add-user-to-contacts,\
-                .contact-request-sent').show();
-                    // focus textarea
-                    $('form textarea', this).focus();
+                // If window is now collapsed (hidden)
+                if ($panel_body.css('display') == 'none') {
+                    $selectUsersMenu.hide(); // Hide dropdown if we minimize the window
+                    $header.css('width', '360px');
+                    // Note: We no longer hide .add-people-to-chat here so it stays visible!
                 }
+                // If window is now expanded (visible)
+                else {
+                    $header.css('width', '320px');
+                    $('form textarea', this).focus();
 
-
-                // Load first 10 messages if messages list is empty
-                if (!messages_visible && $('.load-more-messages', this).length) {
-                    $('.load-more-messages', this)[0].click();}
-                });
+                    // Load first 10 messages if list is empty
+                    if (!messages_visible && $('.load-more-messages', this).length) {
+                        $('.load-more-messages', this)[0].click();
+                    }
+                }
+            });
         });
 
     // when the link to open a conversation is clicked

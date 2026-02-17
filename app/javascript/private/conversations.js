@@ -41,9 +41,14 @@ $(document).on('turbo:load', function() {
     // "Enter" Key to Send
     $(document).on('keydown', '.conversation-window, .conversation', function(event) {
         if (event.keyCode === 13 && !event.shiftKey) {
-            var $textarea = $(this).find('textarea');
+            var $window = $(this);
+            var $textarea = $window.find('textarea');
+
             if ($textarea.val().trim().length > 0) {
-                $(this).find('form').submit(); // This triggers the 'submit' handler above
+                // TARGET SPECIFICALLY the message forms, NOT just any 'form'
+                var $messageForm = $window.find('.send-private-message, .send-group-message');
+                $messageForm.submit();
+
                 event.preventDefault();
             }
         }
@@ -106,26 +111,6 @@ window.calculateUnseenConversations = function() {
     }
 };
 
-// 1. Use .off() to ensure we don't have multiple listeners stacking up
-$(document).off('click', '.conversation-heading').on('click', '.conversation-heading', function(e) {
-    e.preventDefault()
-    // 2. Ignore clicks on the 'X' button or its icon
-    if ($(e.target).closest('.close-conv').length > 0) return;
-
-    var $panel = $(this).closest('.panel-default');
-    var $panelBody = $panel.find('.panel-body');
-
-    // 3. .stop(true, true) stops any current animation so it doesn't "bounce"
-    $panelBody.stop(true, true).slideToggle(100, function() {
-        // 4. Only trigger the load-more link if we just OPENED the window
-        if ($panelBody.is(':visible')) {
-            var $loadMore = $panelBody.find('.load-more-messages');
-            if ($loadMore.length && $panelBody.find('ul li').length === 0) {
-                $loadMore[0].click();
-            }
-        }
-    });
-});
 
 $(document).on('click', '.conversation-window, .private-conversation', function(e) {
     // if the last message in a conversation is not a user's message and is unseen
@@ -145,6 +130,6 @@ $(document).on('click', '.conversation-window, .private-conversation', function(
     }
 });
 
-$(document).on('turbolinks:load', function() {
+$(document).on('turbo:load', function() {
     calculateUnseenConversations();
 });

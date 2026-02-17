@@ -6,7 +6,7 @@ class Post < ApplicationRecord
     joins(:category).where(categories: { branch: branch })
   end
 
-  default_scope -> { includes(:user).order(created_at: :desc) }
+  default_scope -> { includes(:user) }
 
   scope :by_category, ->(branch, category_name) do
     joins(:category).where(categories: {name: category_name, branch: branch})

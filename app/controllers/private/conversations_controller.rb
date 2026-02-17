@@ -17,7 +17,9 @@ class Private::ConversationsController < ApplicationController
 
     add_to_conversations unless already_added?
 
-    @messages = @conversation.messages.order(created_at: :desc).limit(10)
+    @messages = @conversation.messages.order(created_at: :asc).limit(10)
+    @messages = @messages
+
     @user = current_user
 
     respond_to do |format|
@@ -39,7 +41,7 @@ class Private::ConversationsController < ApplicationController
   def open
     @conversation = Private::Conversation.find(params[:id])
     @user = current_user
-    @messages = @conversation.messages.order(created_at: :desc).limit(10)
+    @messages = @conversation.messages.order(created_at: :asc).limit(10)
     add_to_conversations unless already_added?
     respond_to do |format|
       format.js

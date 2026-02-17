@@ -6,7 +6,7 @@
   <!-- messages -->
   <ul>
     <%# Use 'messages' local variable if it exists, otherwise fall back to '@messages' or conversation.messages as a last resort %>
-    <% chat_messages = local_assigns[:messages] || @messages || conversation.messages.order(created_at: :desc).limit(10) %>
+    <% chat_messages = local_assigns[:messages] || @messages || conversation.messages.order(created_at: :asc).limit(10) %>
 
     <% if chat_messages.present? %>
       <% chat_messages.each_with_index do |message, index| %>
