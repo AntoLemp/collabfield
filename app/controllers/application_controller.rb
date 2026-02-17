@@ -32,6 +32,18 @@ class ApplicationController < ActionController::Base
   end
   before_action :all_ordered_conversations
 
+  def set_user_data
+    if user_signed_in?
+      gon.group_conversations = current_user.group_conversations.ids
+      gon.user_id = current_user.id
+      cookies[:user_id] = current_user.id if current_user.present?
+      cookies[:group_conversations] = current_user.group_conversations.ids
+    else
+      gon.group_conversations = []
+    end
+  end
+  before_action :set_user_data
+
   protected
 
   def configure_permitted_parameters
