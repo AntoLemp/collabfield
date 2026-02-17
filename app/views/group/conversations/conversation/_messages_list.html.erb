@@ -7,6 +7,16 @@
   </div>
 
   <ul>
-    <%= render conversation.messages %>
+    <%# We manually track the previous message to pass it into the partial %>
+    <% previous_message = nil %>
+    <% conversation.messages.each do |message| %>
+      <%= render partial: 'group/messages/message',
+                 locals: {
+                   message: message,
+                   previous_message: previous_message,
+                   user: current_user
+                 } %>
+      <% previous_message = message %>
+    <% end %>
   </ul>
 </div>

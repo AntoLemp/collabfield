@@ -1,5 +1,5 @@
 $('#<%= @id_type %><%= @conversation.id %> .load-more-messages')
     .replaceWith('\
-        <%= j render partial: "group/conversations/conversation/messages_list/link_to_previous_messages",\
+        <%= j render partial: "group/load_messages",\
                      locals: { conversation: @conversation } %>\
         ');

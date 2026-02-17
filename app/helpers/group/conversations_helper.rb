@@ -2,22 +2,21 @@ module Group::ConversationsHelper
   include Shared::MessagesHelper
   def group_conv_seen_status(conversation, current_user)
     # handle background service calls or missing users
-    return '' if current_user.nil?
+    return "" if current_user.nil?
 
     # assign the last message to a variable
     last_msg = conversation.messages.last
 
     # if there are no messages, the conversation is effectively "seen"
-    return '' if last_msg.nil?
+    return "" if last_msg.nil?
 
     # check if the message was created by someone else AND not seen by current_user
-    not_created_by_user = last_msg.user_id != current_user.id
-    seen_by_user = last_msg.seen_by.include?(current_user.id)
+    seen_by_list = last_msg.seen_by || []
 
-    if not_created_by_user && !seen_by_user
-      'unseen-conv'
+    if seen_by_list.include?(current_user.id)
+      ""
     else
-      ''
+      "unseen-conv"
     end
   end
 
@@ -36,23 +35,23 @@ module Group::ConversationsHelper
 
   def load_group_messages_partial_path(conversation)
     if conversation.messages.count > 0
-      'group/conversations/conversation/messages_list/load_messages'
+      "group/conversations/conversation/messages_list/load_messages"
     else
-      'shared/empty_partial'
+      "shared/empty_partial"
     end
   end
 
   def group_message_date_check_partial_path(new_message, previous_message)
-    # if a previous message exists
-    if defined?(previous_message) && previous_message.present?
-      # if the date is different between the previous and new messages
-      if previous_message.created_at.to_date != new_message.created_at.to_date
-        'group/messages/message/new_date'
-      else
-        'shared/empty_partial'
-      end
+    # If no previous message exists, this is the first message! Show the date.
+    if previous_message.blank?
+      "group/messages/message/new_date"
     else
-      'shared/empty_partial'
+      # If a previous message exists, only show date if it's a different day
+      if previous_message.created_at.to_date != new_message.created_at.to_date
+        "group/messages/message/new_date"
+      else
+        "shared/empty_partial"
+      end
     end
   end
 
@@ -72,17 +71,17 @@ module Group::ConversationsHelper
     if defined?(previous_message) && previous_message.present?
       # if new message is created by the same user as previous'
       if previous_message.user_id == user.id
-        'group/messages/message/same_user_content'
+        "group/messages/message/same_user_content"
       else
-        'group/messages/message/different_user_content'
+        "group/messages/message/different_user_content"
       end
     else
-      'group/messages/message/different_user_content'
+      "group/messages/message/different_user_content"
     end
   end
 
   def seen_by_user?
-    @seen_by_user ? '' : 'unseen'
+    @seen_by_user ? "" : "unseen"
   end
 
 
