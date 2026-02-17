@@ -34,6 +34,15 @@ Rails.application.routes.draw do
     resources :messages, only: [:index, :create]
   end
   resources :contacts, only: [:create, :update, :destroy]
+  namespace :group do
+    resources :conversations do
+      member do
+        post :close
+        post :open
+      end
+    end
+    resources :messages, only: [:index, :create]
+  end
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker

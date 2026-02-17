@@ -14,14 +14,16 @@ class ApplicationController < ActionController::Base
     if user_signed_in?
       # opened conversations
       session[:private_conversations] ||= []
+      session[:group_conversations] ||= []
       @private_conversations_windows = Private::Conversation.includes(:recipient, :messages)
                                                             .find(session[:private_conversations])
-      gon.last_visible_chat_window = @private_conversations_windows.size
-      gon.hidden_chats = 0
+      @group_conversations_windows = Group::Conversation.find(session[:group_conversations])
     else
       @private_conversations_windows = []
+      @group_conversations_windows = []
     end
   end
+
 
   def all_ordered_conversations
     if user_signed_in?
