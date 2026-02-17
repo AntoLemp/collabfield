@@ -22,6 +22,7 @@ window.private_conversation = conversationSubscription;
 import "./private/toggle_window"
 import "./private/conversations"
 import "./private/message_scroll"
+import "./private/options"
 
 // 5. Import Channels (This will trigger channels/index.js)
 import "./channels"

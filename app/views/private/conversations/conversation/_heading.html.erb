@@ -1,5 +1,8 @@
 <div class="panel-heading <%= conv_heading_class(@contact) %>">
   <span class="contact-name-notif"><%= @recipient.name %></span>
+
+  <%= render create_group_conv_partial_path(@contact), conversation: conversation %>
+  <%= render add_to_contacts_partial_path(@contact) %>
 </div> <!-- conversation-heading -->
 
 <!-- Close conversation button -->
@@ -8,5 +11,3 @@
             class: 'close-conversation',
             title: 'Close',
             data: { turbo: false, remote: true, method: :post } %>
-<%= render add_to_contacts_partial_path(@contact) %>
-<%= render create_group_conv_partial_path(@contact), conversation: conversation %>

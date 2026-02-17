@@ -29,11 +29,14 @@ Rails.application.routes.draw do
         post :close
         post :open
         get :open
+        get :close
       end
     end
     resources :messages, only: [:index, :create]
   end
+
   resources :contacts, only: [:create, :update, :destroy]
+
   namespace :group do
     resources :conversations do
       member do

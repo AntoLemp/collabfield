@@ -31,6 +31,8 @@ class Private::ConversationsController < ApplicationController
 
     respond_to do |format|
       format.js
+      format.turbo_stream { render turbo_stream: turbo_stream.remove("pc#{@conversation.id}") }
+      format.html { redirect_back(fallback_location: root_path) }
     end
   end
 
@@ -40,7 +42,8 @@ class Private::ConversationsController < ApplicationController
     @messages = @conversation.messages.order(created_at: :desc).limit(10)
     add_to_conversations unless already_added?
     respond_to do |format|
-      format.js { render partial: "private/conversations/open" }
+      format.js
+      format.html { redirect_back(fallback_location: root_path) }
     end
   end
 
