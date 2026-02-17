@@ -1,9 +1,5 @@
-<div class="d-flex justify-content-between w-100 w-lg-auto">
-  <%= link_to 'collabfield', root_path, class: 'navbar-brand' %>
-  <button type="button" class="navbar-toggler collapsed"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbar-collapsible-content"
-          aria-expanded="false">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-</div>
+<div class="navbar-header navbar-default">
+  <% nav_header_content_partials.each do |partial_path| %>
+    <%= render partial: partial_path %>
+  <% end %>
+</div><!-- navbar-header -->

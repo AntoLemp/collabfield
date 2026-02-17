@@ -3,7 +3,7 @@ var conversation = $('body').find("[data-pconversation-id='" + "<%= @conversatio
 
 if (conversation.length !== 1) {
     // 2. Append the new window
-    $('body').append("<%= j(render 'private/conversations/conversation', conversation: @conversation, user: current_user) %>");
+    $('conversations-list').append("<%= j(render 'private/conversations/conversation', conversation: @conversation, user: current_user) %>");
 
     // 3. FIX: You had 'pdata-conversation-id' (typo). Changed back to 'data-pconversation-id'
     conversation = $('body').find("[data-pconversation-id='" + "<%= @conversation.id %>" + "']");

@@ -1,0 +1,12 @@
+<% recipient = private_conv_recipient(conversation) %>
+<% seen_status = private_conv_seen_status(conversation) %>
+<li id="menu-pc<%= conversation.id %>"
+    class="<%= seen_status %>"
+    data-id="<%= conversation.id %>"
+    data-type="private">
+  <%= link_to recipient.name.truncate(20),
+              open_private_conversation_path(id: conversation.id),
+              data: { turbo_method: :post },
+              remote: true,
+              class: 'bigger-screen-link' %>
+</li>

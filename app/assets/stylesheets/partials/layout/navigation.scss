@@ -1,9 +1,19 @@
 $navbarColor: #323738;
 
-.navbar-default, .navbar-toggle:focus, .collapsed, button.navbar-toggle {
+.navbar-default,
+.navbar.navbar-default,
+.navbar-expand-lg.navbar-default {
   background: $navbarColor !important;
   border: none;
-  a {
+  min-height: 50px;
+  max-height: 60px;
+  border-radius: 0;
+  width: 100%;
+
+  // Fix for text and links inside the dark bar
+  .navbar-brand, .nav-link, a {
+    font-size: 18px;
+    line-height: 50px;
     color: white !important;
   }
 }
@@ -27,7 +37,7 @@ nav {
 }
 
 .pc-menu {
-  margin-right: 10px;
+  margin-right: 0px;
 }
 
 .mobile-menu {
@@ -69,3 +79,94 @@ nav {
   background: white !important;
 }
 
+.brand-mobile {
+  font-size: 20px;
+  font-size: 2.0rem;
+}
+
+.navigation-items {
+  position: absolute;
+  top: 0;
+  left: 50%;
+}
+
+.navbar-header {
+  .open {
+    width: 36px;
+  }
+}
+
+.non-user-nav-links {
+  display: inline-block;
+  height: 50px;
+  line-height: 50px;
+  vertical-align: middle;
+  padding-right: 20px;
+}
+
+#conversations-menu, #contacts-requests {
+  font-size: 20px;
+  font-size: 2.0rem;
+  height: 50px;
+  line-height: 50px;
+  padding-right: 10px;
+
+  ul {
+    margin: 0;
+    position: relative;
+    top: 50px;
+    right: 200px;
+    border-radius: 0 0 5px 5px;
+    height: 300px;
+    overflow: scroll;
+    overflow-x: hidden;
+    li {
+      a {
+        width: 100%;
+      }
+    }
+  }
+  .unseen-conv {
+    a {
+      background: $backgroundColor;
+      color: black !important;
+    }
+  }
+}
+
+#unseen-conversations, #unresponded-contact-requests {
+  visibility: hidden;
+  padding: 1px;
+  position: absolute;
+  // color: white;
+  font-size: 13px;
+  font-size: 1.3rem;
+}
+
+#unseen-conversations {
+  right: 5px;
+  background: #E92F2F;
+}
+
+#conversations-menu {
+  position: relative; // Ensure the menu is positioned relative to the icon
+
+  ul {
+    margin: 0;
+    position: absolute;
+    top: 50px;
+    right: 0; // Change from 200px to 0 to align it perfectly with the envelope icon
+    width: 400px;
+    // ... keep your existing overflow and scroll styles
+  }
+}
+
+#conversations-list {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  padding: 0;
+  .col-sm-2 {
+    padding: 0;
+  }
+}
