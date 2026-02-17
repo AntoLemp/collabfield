@@ -25,6 +25,7 @@ import "./private/toggle_window"
 import "./private/conversations"
 import "./private/message_scroll"
 import "./private/options"
+import "./channels/contact_requests"
 
 // 5. Import Channels (This will trigger channels/index.js)
 import "./channels"

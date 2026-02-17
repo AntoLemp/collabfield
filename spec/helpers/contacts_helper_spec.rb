@@ -122,6 +122,7 @@ RSpec.describe ContactsHelper, type: :helper do
     end
   end
 
+
   context 'private scope' do
     let(:current_user) { create(:user) }
     let(:recipient) { create(:user) }

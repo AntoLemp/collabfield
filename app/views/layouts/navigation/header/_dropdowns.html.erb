@@ -1,3 +1,8 @@
+<% if user_signed_in? %>
 <div class='pull-right dropdown' id ='conversations-menu'>
   <%= render 'layouts/navigation/header/dropdowns/conversations' %>
 </div>
+<div class='pull-right dropdown' id='contacts-requests'>
+  <%= render 'layouts/navigation/header/dropdowns/contact_requests' %>
+</div>
+<% end %>

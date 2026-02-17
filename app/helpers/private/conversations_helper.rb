@@ -1,7 +1,7 @@
 module Private::ConversationsHelper
   include Shared::ConversationsHelper
   def private_conv_recipient(conversation)
-    conversation.opposed_user(current_user)
+    conversation.opposed_user(current_user) || "Unknown User"
   end
 
   def load_private_messages(conversation)
