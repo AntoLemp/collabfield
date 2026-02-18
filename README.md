@@ -1,24 +1,10 @@
-# README
+# Core Features
+- Post Management: Ability to create, search for, and categorize posts for multiple users.
+- User Contacts: Ability to add other users as personal contacts.
+- Authentication: (Using Devise)
+  - Third-Party Login: Authentication via Google
+  - Local Authentication: Basic authentication is managed locally within the system.
+- Instant Messaging: Direct messaging via popup windows, with support for both private messages (one-on-one) and group chats (multiple users).
+- Instant Updates: Real-time updates.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Using: Ruby (3.4.8) on Rails (8.1.2).
