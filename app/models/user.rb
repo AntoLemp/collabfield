@@ -2,7 +2,9 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable,
+         :omniauthable, omniauth_providers: [ :google_oauth2 ]
+
 
   has_many :posts, dependent: :destroy
 
@@ -44,5 +46,16 @@ class User < ApplicationRecord
   # gets a Contact record
   def contact(contact)
     Contact.where(user_id: self.id, contact_id: contact.id)[0]
+  end
+
+  def self.from_omniauth(access_token)
+    data = access_token.info
+    # Find user by email or create a new one
+    user = User.where(email: data['email']).first_or_create do |u|
+      u.name = data['name']
+      u.email = data['email']
+      u.password = Devise.friendly_token[0,20]
+    end
+    user
   end
 end

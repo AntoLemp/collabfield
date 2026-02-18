@@ -24,7 +24,13 @@
 
         <%= f.submit "Log in", class: 'form-control login-button' %>
       <% end %>
-
+      <hr>
+      <div class="google-login">
+        <%= button_to "Sign in with Google", user_google_oauth2_omniauth_authorize_path,
+                      data: { turbo: false },
+                      method: :post,
+                      class: 'btn btn-danger btn-block' %>
+      </div>
     </div>
   </div>
 </div>
